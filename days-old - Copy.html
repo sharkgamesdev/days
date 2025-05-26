@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Days Old Calculator</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #4facfe, #8e44ad);
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 80px;
+      color: white;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #ffffff;
+      animation: fadeIn 2s ease-in-out;
+      margin-bottom: 40px;
+    }
+
+    label {
+      font-size: 24px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 20px;
+      border-radius: 6px;
+      border: none;
+      margin: 10px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      background-color: #ffffffcc;
+      color: #333;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-top: 20px;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    p {
+      font-size: 28px;
+      font-weight: bold;
+      opacity: 0;
+      animation: none;
+      margin-top: 30px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0.8); opacity: 0; }
+      50%  { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    .animated {
+      animation: pop 0.6s ease-out;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>How Many Days Old Are You?</h1>
+
+  <label for="birthday">Enter your birthday:</label><br>
+  <input type="date" id="birthday"><br>
+
+  <button onclick="calculateDays()">Calculate</button>
+
+  <p id="result"></p>
+
+  <script>
+    function calculateDays() {
+      const birthdayInput = document.getElementById("birthday").value;
+      const result = document.getElementById("result");
+
+      // Reset animation
+      result.classList.remove("animated");
+
+      if (!birthdayInput) {
+        result.innerText = "Please enter your birthday!";
+        result.classList.add("animated");
+        return;
+      }
+
+      const birthday = new Date(birthdayInput);
+      const today = new Date();
+
+      if (birthday > today) {
+        result.innerText = "You can't be born in the future! 🛸";
+        result.classList.add("animated");
+        return;
+      }
+
+      const diff = today - birthday;
+      const daysOld = Math.floor(diff / (1000 * 60 * 60 * 24));
+      result.innerText = "You are " + daysOld + " days old! 🎉";
+      result.classList.add("animated");
+    }
+  </script>
+
+</body>
+</html>
